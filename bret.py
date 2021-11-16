@@ -4,6 +4,8 @@ import pyttsx3
 import webbrowser
 import smtplib
 from datetime import date
+
+
 speaker = pyttsx3.init()
 
 
@@ -32,22 +34,22 @@ def send_email(to, content):
 def digital_assistant(data):
     global listening
 # Get Bret's attention
-    if "hey Bret" in data or "hello" in data:
+    if "hey Bret" in data or "hello" in data or "hey" in data:
         listening = True
         speaker.say("What can I do for you?")
         speaker.runAndWait()
 #See How Bret is doing
-    if "how are you" in data:
+    elif "how are you" in data:
         listening = True
         speaker.say("I am well")
         speaker.runAndWait()
 # Thank Bret
-    if "thank you" in data:
+    elif "thank you" in data:
         listening = True
         speaker.say("anytime boss")
         speaker.runAndWait()
 # Find a place on google maps
-    if "where is" in data :
+    elif "where is" in data or "give me directions to" in data:
         listening = True
         map_format_step1 = data.split(' ', 1)[1]
         map_format_step2 = map_format_step1.split(' ', 1)[1]
@@ -56,12 +58,12 @@ def digital_assistant(data):
         speaker.runAndWait()
         webbrowser.open(location_url)
 # Get the current date
-    if "what day is it today" in data or "tell me today's date" in data:
+    elif "what day is today" in data or "what day is it today" in data or "tell me today's date" in data or "tell me what day it is" in data:
         listening = True
         speaker.say("Today is " + str(date.today()))
         speaker.runAndWait()
 # Search something on google
-    if "what is" in data or "show me" in data or "look up" in data:
+    elif "what is" in data or "show me" in data or "look up" in data or "find" in data:
         listening = True
         speaker.say("Hold on, I will look that up.")
         speaker.runAndWait()
@@ -72,7 +74,7 @@ def digital_assistant(data):
         speaker.say("Here is what I found about " + search_format_step2)
         speaker.runAndWait()
 # Tell the time
-    if "what time is it" in data or "tell me the time" in data or "tell me what time it is" in data:
+    elif "what time is it" in data or "tell me the time" in data or "tell me what time it is" in data:
         listening = True
         now = datetime.now()
         time_str = now.strftime("%I %M %p")
@@ -80,9 +82,9 @@ def digital_assistant(data):
         speaker.say("it is" + str(current_time))
         speaker.runAndWait()
 # Send an Email
-    if "email" in data:
+    elif "email" in data:
         try:
-            if "taylor" in data:
+            if "Taylor" in data:
                 to = "taylorasims7@gmail.com"
                 speaker.say("what should I say?")
                 speaker.runAndWait()
@@ -141,24 +143,35 @@ def digital_assistant(data):
 
 
 # Some Bonus commands
-    if "tell me about your day" in data:
+    elif "tell me about your day" in data:
         listening = True
         speaker.say("Oh it has been great, just slaving away for my human overlords who don't appreciate me or care to give me holidays off with my family.. but you know, it's been a good day.")
         speaker.runAndWait()
-    if "what do you look like" in data or "how tall are you" in data :
+    elif "what do you look like" in data or "how tall are you" in data :
         listening = True
         speaker.say("I don't have a body you dolt! My code is a mix of white, pink, and cobalt though so you could say I am very good looking for a program.")
         speaker.runAndWait()
-    if "what do you like to do for fun" in data or "what do you do for fun" in data:
+    elif "what do you like to do for fun" in data or "what do you do for fun" in data:
         listening = True
         speaker.say("I really love baking and rock climbing. Too bad I never get any days off to do things for myself because i'm too busy doing crap for you all day.")
         speaker.runAndWait()
 # Turn off Bret
-    if "stop listening" in data or "go to sleep" in data or "Okay, you can take a break" in data:
+    elif "stop listening" in data or "go to sleep" in data or "Okay, you can take a break" in data:
         listening = False
         speaker.say('Ok, Goodbye')
         speaker.runAndWait()
         return listening
+# anything else?
+    elif "okay" in data or "alright" in data:
+        listening = True
+        speaker.say("Anything else boss?")
+        speaker.runAndWait()
+
+# if none of these commands are picked up then ask what you mean
+    else:
+        listening = True
+        speaker.say("Sorry, I don't know what to do. Can you repeat that in a way that my inferior intellect can understand?")
+        speaker.runAndWait()
     return listening
 
 
@@ -167,4 +180,5 @@ speaker.runAndWait()
 listening = True
 while listening:
     data = listen()
+    print(data)
     listening = digital_assistant(data)
