@@ -143,6 +143,31 @@ def digital_assistant(data):
                         speaker.runAndWait()
                     elif "no" in confirm2:
                         speaker.say("I guess you'll have to try again later.")
+            elif "Joseph" in data:
+                to = "parkourjoseph21@gmail.com"
+                speaker.say("what should I say?")
+                speaker.runAndWait()
+                content = listen()
+                speaker.say("The message says " + content + " is that right?")
+                speaker.runAndWait()
+                confirm = listen()
+                if "yes" in confirm:
+                    send_email(to, content)
+                    speaker.say("Email has been sent")
+                    speaker.runAndWait()
+                elif "no" in confirm:
+                    speaker.say("what should I say then?")
+                    speaker.runAndWait()
+                    content = listen()
+                    speaker.say("The new message says " + content + " is that better?")
+                    speaker.runAndWait()
+                    confirm2 = listen()
+                    if "yes" in confirm2:
+                        send_email(to, content)
+                        speaker.say("Email has been sent")
+                        speaker.runAndWait()
+                    elif "no" in confirm2:
+                        speaker.say("I guess you'll have to try again later.")
 
 
         except Exception as e:
