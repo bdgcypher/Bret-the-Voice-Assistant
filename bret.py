@@ -4,6 +4,13 @@ import pyttsx3
 import webbrowser
 import smtplib
 from datetime import date
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
+
+PATH = "C:\Program Files (x86)\chromedriver.exe"
+driver = webdriver.Chrome(PATH)
 
 
 speaker = pyttsx3.init()
@@ -54,9 +61,11 @@ def digital_assistant(data):
         map_format_step1 = data.split(' ', 1)[1]
         map_format_step2 = map_format_step1.split(' ', 1)[1]
         location_url = "https://www.google.com/maps/place/" + map_format_step2
-        speaker.say("Hold on, I will show you where " + map_format_step2 + " is.")
+        speaker.say("Hold on, I will show you where that is.")
         speaker.runAndWait()
-        webbrowser.open(location_url)
+        driver.get(location_url)
+        driver_link = driver.find_element(By.CLASS_NAME, "nhb85d-BIqFsb")
+        driver_link.click()
 # Get the current date
     elif "what day is today" in data or "what day is it today" in data or "tell me today's date" in data or "tell me what day it is" in data:
         listening = True
@@ -149,7 +158,7 @@ def digital_assistant(data):
         speaker.runAndWait()
     elif "what do you look like" in data or "how tall are you" in data :
         listening = True
-        speaker.say("I don't have a body you dolt! My code is a mix of white, pink, and cobalt though so you could say I am very good looking for a program.")
+        speaker.say("I don't have a body you dolt! My code is really beautiful though so you could say I am very good looking for a program.")
         speaker.runAndWait()
     elif "what do you like to do for fun" in data or "what do you do for fun" in data:
         listening = True
