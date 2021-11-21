@@ -177,7 +177,7 @@ def digital_assistant(data):
 
 
 # Some Bonus commands
-    elif "tell me about your day" in data:
+    elif "tell me about your day" in data or "how was your day" in data or "how is your day going" in data:
         listening = True
         speaker.say("Oh it has been great, just slaving away for my human overlords who don't appreciate me or care to give me holidays off with my family.. but you know, it's been a good day.")
         speaker.runAndWait()
