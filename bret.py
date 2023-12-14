@@ -33,8 +33,8 @@ def send_email(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login("bdgcypher@gmail.com", "U3F4CS5X")
-    server.sendmail("bdgcypher@gmail.com", to, content)
+    server.login("<YourEmailHere>", "<YourEmailPasswordHere>")
+    server.sendmail("<YourEmailHere>", to, content)
     server.close()
 
 
